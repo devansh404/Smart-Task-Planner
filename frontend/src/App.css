@@ -1,0 +1,77 @@
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+} */
+
+.app-body {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  font-family: monospace, "Courier New", Courier;
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: #2c3e50;
+  padding: 2rem;
+  border-bottom: 2px solid #3498db;
+  margin-bottom: 2rem;
+}
+
+.app-title {
+  color: #3498db;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.app-subtitle {
+  color: #bdc3c7;
+  font-size: 1.1rem;
+}
+
+.main-container {
+  background-color: #282c34;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-form-label {
+  color: #3498db;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: bold;
+}
+
+.custom-form-control {
+  background-color: #1a1a1a !important; /* Use important to override bootstrap */
+  color: #e0e0e0 !important;
+  border: 1px solid #34495e !important;
+}
+
+.custom-form-control::placeholder {
+    color: #7f8c8d;
+}
+
+.custom-form-text {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.generate-button {
+  background-color: #3498db;
+  border-color: #3498db;
+  font-weight: bold;
+}
+
+.export-button {
+  background-color: transparent;
+  border-color: #34495e;
+  color: #bdc3c7;
+}
+
+.export-button svg {
+  margin-right: 5px;
+}

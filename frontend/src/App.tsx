@@ -2,13 +2,24 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-const TaskBreakdown = ({ tasks, onBack }) => {
+type Task = {
+  id: number;
+  name: string;
+  timeline: string;
+  dependencies: string[];
+};
+
+const TaskBreakdown = ({
+  tasks,
+  onBack,
+}: {
+  tasks: Task[];
+  onBack: () => void;
+}) => {
   return (
     <div className="task-breakdown-container">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="app-title" style={{ fontSize: "2rem", marginBottom: 0 }}>
-          Generated Task Plan
-        </h2>
+        <h2 className="app-title generated-plan-title">Generated Task Plan</h2>
         <button className="btn btn-secondary export-button" onClick={onBack}>
           &larr; New Plan
         </button>
@@ -30,12 +41,6 @@ const TaskBreakdown = ({ tasks, onBack }) => {
 const App = () => {
   const [goal, setGoal] = useState<string>("");
   const [deadline, setDeadline] = useState<string>("");
-  type Task = {
-    id: number;
-    name: string;
-    timeline: string;
-    dependencies: string[];
-  };
   const [tasks, setTasks] = useState<Task[]>([]);
   const [showBreakdown, setShowBreakdown] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);

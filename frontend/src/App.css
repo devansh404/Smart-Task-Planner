@@ -75,3 +75,8 @@
 .export-button svg {
   margin-right: 5px;
 }
+
+.generated-plan-title {
+  font-size: 2rem;
+  margin-bottom: 0;
+}

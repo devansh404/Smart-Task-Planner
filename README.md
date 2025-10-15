@@ -15,6 +15,10 @@ The Smart Task Planner is a web application that helps you break down a large go
 *   **Backend:** Python, FastAPI
 *   **AI:** Google Gemini
 
+## Demo Video
+
+* https://drive.google.com/drive/folders/18vI12yqTu3nesoVTfyjzjbyVbUtH9Mwf?usp=sharing
+
 ## Getting Started
 
 Follow these instructions to get the project up and running on your local machine.
@@ -115,11 +119,3 @@ Smart-Task-Planner/
           ...
         ]
         ```
-
-## Contributing
-
-Contributions are welcome! Please feel free to open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License.

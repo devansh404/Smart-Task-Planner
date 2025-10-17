@@ -15,10 +15,6 @@ The Smart Task Planner is a web application that helps you break down a large go
 *   **Backend:** Python, FastAPI
 *   **AI:** Google Gemini
 
-## Demo Video
-
-* https://drive.google.com/drive/folders/18vI12yqTu3nesoVTfyjzjbyVbUtH9Mwf?usp=sharing
-
 ## Getting Started
 
 Follow these instructions to get the project up and running on your local machine.
@@ -41,11 +37,6 @@ Follow these instructions to get the project up and running on your local machin
     *   Navigate to the `backend` directory:
         ```bash
         cd backend
-        ```
-    *   Create and activate a virtual environment:
-        ```bash
-        python -m venv venv
-        source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
         ```
     *   Install the required Python packages:
         ```bash

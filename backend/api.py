@@ -25,7 +25,7 @@ def generate_plan_from_llm(goal: str, deadline: str) -> dict:
     1. Divide the goal into manageable tasks.
     2. For each task, provide a concise description.
     3. Calculate a realistic timeline for each task based on the goal's total duration. The final task's timeline should not exceed the goal's deadline.
-    4. Return the output as a single valid JSON object which contains a list of task objects. Each task object must include: "id" (integer), "task" (string), "description" (string), and "deadline" (string in HH hours/DD days format).
+    4. Return the output as a single valid JSON object which contains a list of task objects. Each task object must include: "id" (integer), "name" (string), "description" (string), and "timeline" (string in HH hours/DD days format).
     Do not wrap the JSON in markdown code fences.
     Following is the example JSON format for each task object:
     [
@@ -48,13 +48,16 @@ def generate_plan_from_llm(goal: str, deadline: str) -> dict:
         "timeline": "2 days"
         }}
     ]
+    and output text should be in the above format only.
     """
     try:
         response = client.models.generate_content(
         model="gemini-2.5-pro",
         contents=prompt
         )
+        print(response)
         cleaned_response = response.text.strip().replace("```json", "").replace("```", "")
+        print(cleaned_response)
         return json.loads(cleaned_response)
     
     except Exception as e:
@@ -98,6 +101,7 @@ async def create_plan(request: GoalRequest):
         return {"id": id, "name": name, "description": description, "timeline": timeline}
 
     data: list[dict] = [map_item(it) for it in res]
+    print(data)
     return data
 
 # To run this app:

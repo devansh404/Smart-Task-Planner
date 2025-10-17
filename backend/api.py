@@ -1,8 +1,11 @@
+import os
 from google import genai
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import json
+from dotenv import load_dotenv
+from pydantic import BaseModel
+load_dotenv()
 
 def generate_plan_from_llm(goal: str, deadline: str) -> dict:
     """
@@ -10,7 +13,7 @@ def generate_plan_from_llm(goal: str, deadline: str) -> dict:
     """
 
     # The client gets the API key from the environment variable `GEMINI_API_KEY`.
-    client = genai.Client()
+    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
     
     prompt = f"""
     You are an expert project manager. Analyze the following user goal and break it down into a series of simple actionable tasks.
@@ -22,29 +25,29 @@ def generate_plan_from_llm(goal: str, deadline: str) -> dict:
     1. Divide the goal into manageable tasks.
     2. For each task, provide a concise description.
     3. Calculate a realistic timeline for each task based on the goal's total duration. The final task's timeline should not exceed the goal's deadline.
-    4. Return the output as a single valid JSON object with a key "plan", which contains a list of task objects. Each task object must include: "id" (integer), "task" (string), "description" (string), and "deadline" (string in HH hours/DD days format).
+    4. Return the output as a single valid JSON object which contains a list of task objects. Each task object must include: "id" (integer), "task" (string), "description" (string), and "deadline" (string in HH hours/DD days format).
+    Do not wrap the JSON in markdown code fences.
     Following is the example JSON format for each task object:
     [
-        {
+        {{
         "id": 1,
         "name": "Define MVP & acceptance criteria",
         "description": "Write concise scope and success metrics for the launch.",
         "timeline": "4 hours"
-        },
-        {
+        }},
+        {{
         "id": 2,
         "name": "Wireframes & user flow",
         "description": "Design the basic layout and flow of user screens.",
         "timeline": "6 hours"
-        },
-        {
+        }},
+        {{
         "id": 3,
         "name": "Backend APIs & database schema",
         "description": "Implement core API endpoints and schema for products and users.",
         "timeline": "2 days"
-        }
+        }}
     ]
-    Do not wrap the JSON in markdown code fences.
     """
     try:
         response = client.models.generate_content(
@@ -57,7 +60,8 @@ def generate_plan_from_llm(goal: str, deadline: str) -> dict:
     except Exception as e:
         print(f"Error processing LLM response: {e}")
         return {"error": "Failed to generate or parse the plan."}
-
+        # Helper to map a single raw item into canonical {task, deadline}
+    
 app = FastAPI(title="Task Planner API")
 
 app.add_middleware(
@@ -71,9 +75,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- API Endpoint ---
 class GoalRequest(BaseModel):
     goal: str
-    deadline: str
+    deadline: str | None = None
 
 # --- API Endpoint ---
 @app.post("/generate-plan")
@@ -81,10 +86,19 @@ async def create_plan(request: GoalRequest):
     """
     Accepts a user goal and returns a structured task plan.
     """
-    plan = generate_plan_from_llm(request.goal, request.deadline)
-    if "error" in plan:
-        raise HTTPException(status_code=500, detail=plan["error"])
-    return plan
+    res = generate_plan_from_llm(request.goal, request.deadline)
+
+    def map_item(item: dict) -> dict:
+        if not isinstance(item, dict):
+            return {"name": str(item), "timeline": ""}
+        id = item.get("id")
+        name = item.get("name")
+        description = item.get("description")
+        timeline = item.get("timeline")
+        return {"id": id, "name": name, "description": description, "timeline": timeline}
+
+    data: list[dict] = [map_item(it) for it in res]
+    return data
 
 # To run this app:
 # 1. pip install fastapi uvicorn google-generativeai python-dotenv

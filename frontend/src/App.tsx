@@ -25,13 +25,17 @@ const TaskBreakdown = ({
       </div>
 
       {Array.isArray(tasks) && tasks.length > 0 ? (
-        tasks.map((task, index) => (
-          <div key={task.id || index} className="task-card">
-            <p className="task-name mb-2">{task.name}</p>
-            <p className="task-description mb-2">{task.description}</p>
-            <p className="task-details mb-0 text-white-50">
-              <strong>Timeline:</strong> {task.timeline}
+        tasks.map((task) => (
+          <div key={task.id} className="task-card">
+            <p className="task-name mb-2">
+              {task.id}. {task.name}
             </p>
+            <p className="task-details mb-0">{task.description}</p>
+            {task.timeline && (
+              <p className="task-details mb-0 text-white-50">
+                <strong>Timeline:</strong> {task.timeline}
+              </p>
+            )}
           </div>
         ))
       ) : (
@@ -72,12 +76,21 @@ const App = () => {
 
       const data = await response.json();
 
-      // Basic validation: expect an array
-      if (Array.isArray(data)) {
-        setTasks(data as Task[]);
+      if (data && Array.isArray(data)) {
+        // Map any items defensively to our Task shape
+        const tasks = data.map((it: any) => ({
+          id: it.id,
+          name: it.name,
+          description: it.description,
+          timeline: it.timeline,
+        }));
+
+        setTasks(tasks as Task[]);
         setShowBreakdown(true);
       } else {
-        throw new Error("Unexpected response format from backend");
+        throw new Error(
+          "Unexpected response format from backend: expected { plan: [...] }"
+        );
       }
     } catch (err) {
       console.error("Error generating plan:", err);

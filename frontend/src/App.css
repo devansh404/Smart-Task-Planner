@@ -23,6 +23,7 @@
   color: #3498db;
   font-size: 2.5rem;
   font-weight: bold;
+  margin-bottom: 0;
 }
 
 .app-subtitle {
@@ -66,17 +67,46 @@
   font-weight: bold;
 }
 
-.export-button {
-  background-color: transparent;
-  border-color: #34495e;
-  color: #bdc3c7;
-}
-
-.export-button svg {
-  margin-right: 5px;
-}
-
 .generated-plan-title {
   font-size: 2rem;
   margin-bottom: 0;
+}
+
+.task-breakdown-container {
+    background-color: #282c34;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.task-card {
+    background-color: #1a1a1a;
+    border: 1px solid #34495e;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+}
+
+.task-name {
+    color: #3498db;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.task-details {
+    font-size: 0.9rem;
+}
+
+.error-message {
+    color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 1px solid #e74c3c;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-top: 1rem;
 }

@@ -1,12 +1,11 @@
 import { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 type Task = {
   id: number;
   name: string;
+  description: string;
   timeline: string;
-  dependencies: string[];
 };
 
 const TaskBreakdown = ({
@@ -19,21 +18,25 @@ const TaskBreakdown = ({
   return (
     <div className="task-breakdown-container">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2 className="app-title generated-plan-title">Generated Task Plan</h2>
+        <h2 className="app-title">Generated Task Plan</h2>
         <button className="btn btn-secondary export-button" onClick={onBack}>
           &larr; New Plan
         </button>
       </div>
 
-      {Array.isArray(tasks) &&
+      {Array.isArray(tasks) && tasks.length > 0 ? (
         tasks.map((task, index) => (
           <div key={task.id || index} className="task-card">
             <p className="task-name mb-2">{task.name}</p>
+            <p className="task-description mb-2">{task.description}</p>
             <p className="task-details mb-0 text-white-50">
               <strong>Timeline:</strong> {task.timeline}
             </p>
           </div>
-        ))}
+        ))
+      ) : (
+        <p>No tasks were generated. Try refining your goal.</p>
+      )}
     </div>
   );
 };

@@ -52,7 +52,7 @@ def generate_plan_from_llm(goal: str, deadline: str) -> dict:
     """
     try:
         response = client.models.generate_content(
-        model="gemini-2.5-pro",
+        model="gemini-2.5-flash",
         contents=prompt
         )
         print(response)
@@ -103,8 +103,3 @@ async def create_plan(request: GoalRequest):
     data: list[dict] = [map_item(it) for it in res]
     print(data)
     return data
-
-# To run this app:
-# 1. pip install fastapi uvicorn google-generativeai python-dotenv
-# 2. Set your GOOGLE_API_KEY environment variable.
-# 3. Run in your terminal: uvicorn main:app --reload

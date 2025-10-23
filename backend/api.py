@@ -63,7 +63,6 @@ def generate_plan_from_llm(goal: str, deadline: str) -> dict:
     except Exception as e:
         print(f"Error processing LLM response: {e}")
         return {"error": "Failed to generate or parse the plan."}
-        # Helper to map a single raw item into canonical {task, deadline}
     
 app = FastAPI(title="Task Planner API")
 
@@ -81,7 +80,7 @@ app.add_middleware(
 # --- API Endpoint ---
 class GoalRequest(BaseModel):
     goal: str
-    deadline: str | None = None
+    deadline: str
 
 # --- API Endpoint ---
 @app.post("/generate-plan")
@@ -101,5 +100,4 @@ async def create_plan(request: GoalRequest):
         return {"id": id, "name": name, "description": description, "timeline": timeline}
 
     data: list[dict] = [map_item(it) for it in res]
-    print(data)
     return data

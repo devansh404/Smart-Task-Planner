@@ -120,50 +120,61 @@ const App = () => {
         </header>
 
         <main className="container">
-          <div className="main-container">
-            <div className="mb-4">
-              <label htmlFor="goal" className="custom-form-label">
-                Goal
-              </label>
-              <textarea
-                id="goal"
-                className="form-control custom-form-control"
-                rows={4}
-                placeholder="e.g., Launch a product"
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
-              ></textarea>
-              <small className="form-text custom-form-text">
-                Be specific about scope and constraints for sharper tasks.
-              </small>
-            </div>
+          {!showBreakdown && (
+            <div className="main-container">
+              <div className="mb-4">
+                <label htmlFor="goal" className="custom-form-label">
+                  Goal
+                </label>
+                <textarea
+                  id="goal"
+                  className="form-control custom-form-control"
+                  rows={4}
+                  placeholder="e.g., Launch a product"
+                  value={goal}
+                  onChange={(e) => setGoal(e.target.value)}
+                ></textarea>
+                <small className="form-text custom-form-text">
+                  Be specific about scope and constraints for sharper tasks.
+                </small>
+              </div>
 
-            <div className="mb-4">
-              <label htmlFor="deadline" className="custom-form-label">
-                Deadline
-              </label>
-              <div className="date-input-container">
-                <input
-                  type="text"
-                  id="deadline"
-                  className="form-control custom-form-control date-input"
-                  placeholder="in 2 weeks"
-                  value={deadline}
-                  onChange={(e) => setDeadline(e.target.value)}
-                />
+              <div className="mb-4">
+                <label htmlFor="deadline" className="custom-form-label">
+                  Deadline
+                </label>
+                <div className="date-input-container">
+                  <input
+                    type="text"
+                    id="deadline"
+                    className="form-control custom-form-control date-input"
+                    placeholder="in 2 weeks"
+                    value={deadline}
+                    onChange={(e) => setDeadline(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex gap-2">
+                <button
+                  className="btn btn-primary generate-button"
+                  onClick={handleGeneratePlan}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div className="loading-dots">
+                      {"Generating"}
+                      <span className="dot"></span>
+                      <span className="dot"></span>
+                      <span className="dot"></span>
+                    </div>
+                  ) : (
+                    "Generate Plan"
+                  )}
+                </button>
               </div>
             </div>
-
-            <div className="d-flex gap-2">
-              <button
-                className="btn btn-primary generate-button"
-                onClick={handleGeneratePlan}
-                disabled={isLoading}
-              >
-                {isLoading ? "Generating..." : "Generate Plan"}
-              </button>
-            </div>
-          </div>
+          )}
 
           {/* Error message */}
           {error && (

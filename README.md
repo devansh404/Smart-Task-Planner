@@ -79,12 +79,13 @@ The application should now be running at `http://localhost:5173`.
 Smart-Task-Planner/
 ├── backend/
 │   ├── api.py          # FastAPI application
-│   └── gemini_api.py   # Gemini API client
+│   └── requirements.txt 
 ├── frontend/
 │   ├── src/
 │   │   ├── App.tsx     # Main React component
 │   │   └── ...
 │   └── ...
+├── .env
 └── README.md
 ```
 
@@ -95,7 +96,7 @@ Smart-Task-Planner/
         ```json
         {
           "goal": "Your goal here",
-          "deadline": "Optional deadline"
+          "deadline": "deadline to achive the goal"
         }
         ```
     *   **Response:**
@@ -103,9 +104,9 @@ Smart-Task-Planner/
         [
           {
             "id": 1,
-            "name": "Task 1",
-            "timeline": "Day 1-2",
-            "dependencies": []
+            "name": "Step 1 to be performed",
+            "description": "Details of the Step 1"
+            "timeline": "Day/hours 1-2"
           },
           ...
         ]

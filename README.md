@@ -86,6 +86,7 @@ Smart-Task-Planner/
 │   │   └── ...
 │   └── ...
 ├── .env
+├── .gitignore
 └── README.md
 ```
 
